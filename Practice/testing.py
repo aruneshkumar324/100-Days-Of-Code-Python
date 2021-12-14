@@ -2,18 +2,26 @@ from turtle import Turtle, Screen
 
 screen = Screen()
 
-# screen.delay(1000)
-
-screen.tracer(0)
+screen.bgcolor("black")
 
 tom = Turtle()
 
+tom.penup()
+
+tom.color("white")
+
+tom.setposition(0, 280)
 
 
 
-tom.forward(100)
+tom.write(arg="Hello", font=['Arial', 18])
 
-# screen.update()
+
+tom.hideturtle()
+
+
+
+
 
 
 
