@@ -33,6 +33,7 @@ while game_is_on:
     # MISSION COMPLETE
     if player.finish_task():
         player.go_to_start()
+        car.level_up()
 
 
 screen.exitonclick()
