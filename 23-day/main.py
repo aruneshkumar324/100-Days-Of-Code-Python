@@ -12,8 +12,7 @@ screen.listen()
 # PLAYER
 player = Player()
 
-# KEY CONTROL
-screen.onkeypress(player.move, "Up")
+screen.onkey(player.go_up, "Up")
 
 game_is_on = True
 while game_is_on:
