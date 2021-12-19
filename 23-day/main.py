@@ -21,12 +21,19 @@ game_is_on = True
 while game_is_on:
     time.sleep(0.1)
     screen.update()
+
     car.create_car()
     car.move_cars()
+
     # DETECT ANY CAR TOUCH TURTLE
     for obj in car.all_cars:
         if obj.distance(player) < 20:
             game_is_on = False
 
+    # MISSION COMPLETE
+    if player.finish_task():
+        player.go_to_start()
+
 
 screen.exitonclick()
+
