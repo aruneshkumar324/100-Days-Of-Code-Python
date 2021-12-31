@@ -2,10 +2,10 @@
 
 # print("Hello"+" "+"Arunesh")
 
-# take user input
+# take user Input
 """
-input('Enter your name ?')
-print('Hello '+ input('Enter your name ?'))
+Input('Enter your name ?')
+print('Hello '+ Input('Enter your name ?'))
 """
 
 # count string length

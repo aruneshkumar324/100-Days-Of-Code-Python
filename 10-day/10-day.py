@@ -1,7 +1,7 @@
 def format_name(f_name, l_name):
     """FORMAT NAME : first argument and second argument will create capilize letter"""
     if f_name == "" or l_name == "":
-        return "Empty input"
+        return "Empty Input"
 
     # firstName = f_name[0].upper() + f_name[1:].lower()
     # lastName = l_name[0].upper() + l_name[1:].lower()

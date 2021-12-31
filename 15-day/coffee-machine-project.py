@@ -105,10 +105,10 @@ def is_resource_sufficient(order_ingredients):
 def process_coins():
     """Returns the total calculated from coins inserted."""
     print("Please insert coins.")
-    total = int(input("how many quarters?: ")) * 0.25
-    total += int(input("how many dimes?: ")) * 0.1
-    total += int(input("how many nickles?: ")) * 0.05
-    total += int(input("how many pennies?: ")) * 0.01
+    total = int(Input("how many quarters?: ")) * 0.25
+    total += int(Input("how many dimes?: ")) * 0.1
+    total += int(Input("how many nickles?: ")) * 0.05
+    total += int(Input("how many pennies?: ")) * 0.01
     return total
 
 
@@ -135,7 +135,7 @@ def make_coffee(drink_name, order_ingredients):
 is_on = True
 
 while is_on:
-    choice = input("​What would you like? (espresso/latte/cappuccino): ")
+    choice = Input("​What would you like? (espresso/latte/cappuccino): ")
     if choice == "off":
         is_on = False
     elif choice == "report":

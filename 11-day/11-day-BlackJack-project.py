@@ -86,7 +86,7 @@ def play_game():
     print(user_cards)
     print(computer_cards)
 
-    # Hint 6: Create a function called calculate_score() that takes a List of cards as input
+    # Hint 6: Create a function called calculate_score() that takes a List of cards as Input
     # and returns the score.
     # Look up the sum() function to help you do this.
 
@@ -139,7 +139,7 @@ def blackjack():
 
     # ask for play again
     def play_again():
-        ask = input("Do you want to pplay a game of Black? Type 'y' or 'n': ")
+        ask = Input("Do you want to pplay a game of Black? Type 'y' or 'n': ")
         if ask == "y":
             blackjack()
 
@@ -171,7 +171,7 @@ def blackjack():
     # ask user do you want generate again new card
     get_another_card = total_user <= 21
     while get_another_card:
-        new_card = input("Type 'y' to get another card, type 'n' to pass: ")
+        new_card = Input("Type 'y' to get another card, type 'n' to pass: ")
 
         if new_card == "y":
             total_user = 0
@@ -210,7 +210,7 @@ def blackjack():
         print("You went over. You lose 😢")
 
 # call game function if user want play game
-game_start = input("Do you want to play a game of Blackjack? Type 'y' or 'n': ")
+game_start = Input("Do you want to play a game of Blackjack? Type 'y' or 'n': ")
 
 if game_start == "y":
     blackjack()

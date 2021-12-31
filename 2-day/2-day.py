@@ -49,7 +49,7 @@ print(str(5) + str(5))
 print(str(5) + "Hello")
 print("Hello "+ str(5))
 
-# name = input("Enter your name\n")
+# name = Input("Enter your name\n")
 # name_count = len(name)
 # print(type(name_count))
 # print("Your name has "+ str(name_count) + " characters")

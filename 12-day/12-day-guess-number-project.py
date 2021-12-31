@@ -66,7 +66,7 @@ def check_answer(guess, answer, turns):
 
 #Make function to set difficulty.
 def set_difficulty():
-  level = input("Choose a difficulty. Type 'easy' or 'hard': ")
+  level = Input("Choose a difficulty. Type 'easy' or 'hard': ")
   if level == "easy":
     return EASY_LEVEL_TURNS
   else:
@@ -87,7 +87,7 @@ def game():
     print(f"You have {turns} attempts remaining to guess the number.")
 
     #Let the user guess a number.
-    guess = int(input("Make a guess: "))
+    guess = int(Input("Make a guess: "))
 
     #Track the number of turns and reduce by 1 if they get it wrong.
     turns = check_answer(guess, answer, turns)

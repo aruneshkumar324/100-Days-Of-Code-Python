@@ -31,7 +31,7 @@ scissors = '''
 
 rps = [rock, paper, scissors]
 
-# user input for RPS
+# user Input for RPS
 user = int(input("What do you choose? Type 0 for Rock, 1 for Paper or 2 for Scissors.\n"))
 
 

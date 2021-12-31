@@ -43,7 +43,7 @@ def calculator():
         answer = result(num1, num2)
         print(f"{num1} {operation_symbol} {num2} = {answer}")
 
-        # ask_user = input(f"Type 'y' to continue calculating with {answer}, or type new to start new calculator, or type 'n' to exit.: ")
+        # ask_user = Input(f"Type 'y' to continue calculating with {answer}, or type new to start new calculator, or type 'n' to exit.: ")
         ask_user = input(f"Type 'y' with old value, 'new' new calculator, or 'n' to exit.: ")
         if ask_user == "y":
             num1 = answer
