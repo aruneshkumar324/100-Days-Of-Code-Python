@@ -27,15 +27,78 @@
 import pandas
 
 data = pandas.read_csv('weather_data.csv')
-print(data)
 
-print()
+# print(type(data))
+# print(type(data['temp']))
 
-print(data['temp'])
+# data_dict = data.to_dict()
+# print(data_dict)
+#
+#
+# data_json = data.to_json()
+# print(data_json)
+#
+# data_list = data['temp'].to_list()
+# print(data_list)
+
+# data_list_1 = data['day'].to_list()
+# print(data_list_1)
+
+# for day in data_list_1:
+#     print(day)
 
 
-students = pandas.read_csv('4th-7A-year-students-details.csv')
-print(students['NAME'])
+# ##  1 - METHOD
+# aveg_temp = 0
+# total_temp = 0
+#
+# for tem in data_list:
+#     aveg_temp += tem
+#     total_temp += 1
+#
+# print(aveg_temp / total_temp)
+
+
+# # 2 - METHOD
+# avegrag_temp = sum(data_list) / len(data_list)
+# print(avegrag_temp)
+
+
+# ##  3 - METHOD
+# aveg_temp = data['temp'].mean()
+# print(aveg_temp)
+#
+#
+# print(data['temp'].count())
+#
+# print(data['temp'].median())
+#
+# print(data['temp'].min())
+# print(data['temp'].max())
+# print(data['temp'].unique())
+
+
+## GET COLUMN
+get_col = data['condition']
+print(get_col)
+print(data.condition)
+
+
+## GET ROW
+
+get_row = data[data.day == 'Thursday']
+print(get_row)
+
+get_row_a = data[data['day'] == 'Thursday']
+print(get_row_a)
+
+
+get_high_temp = data[data.temp == data['temp'].max()]
+print(get_high_temp)
+
+#
+# high_temp = data['temp'].max()
+# print(high_temp)
 
 
 
