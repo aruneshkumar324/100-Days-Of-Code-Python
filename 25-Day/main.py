@@ -26,7 +26,7 @@
 
 import pandas
 
-data = pandas.read_csv('weather_data.csv')
+# data = pandas.read_csv('weather_data.csv')
 
 # print(type(data))
 # print(type(data['temp']))
@@ -78,35 +78,73 @@ data = pandas.read_csv('weather_data.csv')
 # print(data['temp'].unique())
 
 
-## GET COLUMN
-get_col = data['condition']
-print(get_col)
-print(data.condition)
-
-
-## GET ROW
-
-get_row = data[data.day == 'Thursday']
-print(get_row)
-
-get_row_a = data[data['day'] == 'Thursday']
-print(get_row_a)
-
-
-get_high_temp = data[data.temp == data['temp'].max()]
-print(get_high_temp)
+# ## GET COLUMN
+# get_col = data['condition']
+# print(get_col)
+# print(data.condition)
+#
+#
+# ## GET ROW
+#
+# get_row = data[data.day == 'Thursday']
+# print(get_row)
+#
+# get_row_a = data[data['day'] == 'Thursday']
+# print(get_row_a)
+#
+#
+# get_high_temp = data[data.temp == data['temp'].max()]
+# print(get_high_temp)
 
 #
 # high_temp = data['temp'].max()
 # print(high_temp)
 
 
+data = pandas.read_csv("2018_Central_Park_Squirrel_Census_-_Squirrel_Data (1).csv")
+
+# print(data)
+
+# print(data['Primary Fur Color'].value_counts())
 
 
+# new_file = pandas.Series(new_data)
+
+# color_data = data['Primary Fur Color'].value_counts()
+#
+# print(color_data)
+
+# x = color_data[color_data['Gray'] == 'Gray']
+# x = color_data['Gray']
+# print(x)
+
+# new_file = pandas.DataFrame(data['Primary Fur Color'].value_counts())
+# new_file.to_csv("new_file.csv")
+# print(new_file)
+
+print(data['Primary Fur Color'])
+
+gray_color = len(data[data['Primary Fur Color'] == 'Gray'])
+cinnamon_color = len(data[data['Primary Fur Color'] == 'Cinnamon'])
+black_color = len(data[data['Primary Fur Color'] == 'Black'])
 
 
+print(gray_color)
+print(cinnamon_color)
+print(black_color)
 
 
+new_data = {
+    "Fur Color": ["Gray", "Cinnamon", "Black"],
+    "Counts": [gray_color, cinnamon_color, black_color]
+}
+
+
+ins_data = pandas.DataFrame(new_data)
+
+print(ins_data)
+
+ins_data.to_csv("squirrel_data.csv")
 
 
 
