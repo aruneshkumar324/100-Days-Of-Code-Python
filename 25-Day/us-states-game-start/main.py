@@ -21,8 +21,10 @@ while len(guessed_state) < 50:
         # for state in all_state:
         #     if state not in guessed_state:
         #         missing_states.append(state)
-        # new_data = pandas.DataFrame(missing_states)
-        # new_data.to_csv("states_to_learn1.csv")
+        missing_states = [state for state in all_state if state not in guessed_state]
+        new_data = pandas.DataFrame(missing_states)
+        new_data.to_csv("states_to_learn1.csv")
+
         break
     if answer_state in all_state:
         guessed_state.append(answer_state)
@@ -35,9 +37,9 @@ while len(guessed_state) < 50:
 
         tom.write(answer_state)
 
-a = list(set(all_state) - set(guessed_state))
-b = pandas.DataFrame(a)
-b.to_csv('states_to_learn.csv')
+# a = list(set(all_state) - set(guessed_state))
+# b = pandas.DataFrame(a)
+# b.to_csv('states_to_learn.csv')
 
 '''
 score = 0

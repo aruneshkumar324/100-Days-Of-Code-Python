@@ -32,10 +32,21 @@ five_char_name = [name.upper() for name in names if len(name) > 5]
 print(five_char_name)
 
 
+'''
+        239  VIDEO
+'''
+#  DICTIONARY COMPRESSION
+import random
 
+names = ['Arunesh', 'Rohan', 'Raj', 'Mohan', 'Sohan']
 
+students_score = {student: random.randint(1, 100) for student in names}
 
+print(students_score)
 
+passed_students = {student: marks for (student, marks) in students_score.items() if marks >= 60}
+
+print(passed_students)
 
 
 
