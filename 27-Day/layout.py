@@ -1,44 +1,33 @@
 from tkinter import *
 
 window = Tk()
-
-
 window.title("My First GUI App")
 window.minsize(width=500, height=300)
+window.config(padx=20, pady=20)
 
-# components
 label = Label(text="Label Test", font=("Arial", 18, "bold"))
 # label.pack()
-# label.pack(side='top')  # right, bottom, left, top
-# label.pack(expand=True)
-label.pack()
-
-label['text'] = 'New Text Content'
-label.config(text='New Text Content')
+# label.place(x=50, y=10)
+label.grid(column=0, row=0)
+label.config(padx=50, pady=50)
 
 
-# BUTTON
 def button_clicked():
     print("Clicked Me Someone")
-    # label.config(text='Button Clicked')
     label.config(text=input.get())
-
 button = Button(text='Click Me', command=button_clicked)
-button.pack()
+# button.pack()
+button.grid(column=1, row=1)
 
 
-
-# ENTRY
 input = Entry(width=20)
-input.pack()
-# print(input.get())
-
-# data = input.get()
-# print(data)
+# input.pack()
+input.grid(column=3, row=2)
 
 
-
-
+# NEW BUTTON
+new_button = Button(text='New Button')
+new_button.grid(column=2, row=0)
 
 
 
@@ -53,5 +42,9 @@ input.pack()
 
 
 
-# WINDOW SCREEN SHOW
+
+
+
+
+
 window.mainloop()
