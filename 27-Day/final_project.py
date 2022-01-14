@@ -6,6 +6,7 @@ FONT = ('Arial', 12)
 
 window = Tk()
 window.title('Mile to Km Converter')
+window.iconbitmap('icon.ico')
 # window.minsize(width=300, height=200)
 window.config(padx=20, pady=20)
 
