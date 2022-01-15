@@ -11,12 +11,31 @@ label = Label(text=num, font=('Arial', 18, 'bold'))
 label.pack()
 
 
-def add(num):
+def increase():
+    global num
     num += 1
     label.config(text=num)
 
-button = Button(text='+', command=add)
-button.pack()
+increase_button = Button(text='+', command=increase)
+increase_button.pack()
+
+
+def decrease():
+    global num
+    num -= 1
+    label.config(text=num)
+
+decrease_button = Button(text='-', command=decrease)
+decrease_button.pack()
+
+def reset():
+    global num
+    num = 0
+    label.config(text=num)
+
+reset_button = Button(text='Reset', command=reset)
+reset_button.pack()
+
 
 
 window.mainloop()
