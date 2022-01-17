@@ -17,8 +17,13 @@ def demo():
 
 # -----------------------------     READ DATA FROM FILE      --------------------------------
 
-data = pandas.read_csv('data/french_words.csv')
-to_learn = data.to_dict(orient='records')
+try:
+    data = pandas.read_csv('data/words_to_learn.csv')
+except FileNotFoundError:
+    original_data = pandas.read_csv('data/french_words.csv')
+    to_learn = original_data.to_dict(orient='records')
+else:
+    to_learn = data.to_dict(orient='records')
 
 current_card = {}
 
@@ -37,6 +42,15 @@ def flip_card():
     canvas.itemconfig(canvas_image, image=back_image)
     canvas.itemconfig(update_title, text="English", fill="white")
     canvas.itemconfig(update_word, text=current_card['English'], fill="white")
+
+
+def right_guess():
+    to_learn.remove(current_card)
+    print(len(to_learn))
+
+    dt = pandas.DataFrame(to_learn)
+    dt.to_csv('data/words_to_learn.csv', index=False)
+    next_card()
 
 
 # -----------------------------     UI      --------------------------------
@@ -63,7 +77,7 @@ wrong_button.grid(column=0, row=1)
 
 
 right_image = PhotoImage(file='images/right.png')
-right_button = Button(image=right_image, highlightthickness=0, command=next_card)
+right_button = Button(image=right_image, highlightthickness=0, command=right_guess)
 right_button.grid(column=1, row=1)
 
 
