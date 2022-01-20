@@ -16,42 +16,47 @@ day = now.day
 #   CSV FILE DATA
 data = pd.read_csv('birthdays.csv')
 
-r_mail = ""
 
-today_bod = data[data["day"] == 20]
-print(today_bod)
+try:
+    today_bod = data[data["day"] == 15]
+    print(today_bod)
 
-bod_data = today_bod.to_dict(orient="records")
-print(bod_data)
+    bod_data = today_bod.to_dict(orient="records")
+    print(bod_data)
 
-if bod_data[0]["month"] == month:
-    # GET DATA FROM CSV FILE
-    print("Happy Birthday")
-    name = bod_data[0]["name"]
-    email = bod_data[0]["email"]
-    r_mail += email
+    check_month = bod_data[0]["month"] == 7
 
-    #   TEMPLATE UPDATE FOR SENDING
-    template = ""
-    temps = ["letter_1.txt", "letter_2.txt", "letter_3.txt"]
-    print(choice(temps))
+except IndexError:
+    print("Today NO BIRTHDAY")
 
-    with open(f"letter_templates/{choice(temps)}", mode="r") as temp_file:
-        read_data = temp_file.read()
-        read_data = read_data.replace("[NAME]", name)
-        print(read_data)
-        template += read_data
+else:
+    if check_month:
+        # GET DATA FROM CSV FILE
+        print("Happy Birthday")
+        name = bod_data[0]["name"]
+        email = bod_data[0]["email"]
 
-# SEND MAIL TO WISH BIRTHDAY
-my_email = "pythonemailtesting76@gmail.com"
-password = "9534857622"
+        #   TEMPLATE UPDATE FOR SENDING
+        template = ""
+        temps = ["letter_1.txt", "letter_2.txt", "letter_3.txt"]
+        print(choice(temps))
 
-with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
-    connection.starttls()
-    connection.login(user=my_email, password=password)
-    connection.sendmail(
-        from_addr=my_email,
-        to_addrs=r_mail,
-        msg=f"Subject:Happy BirthDay!\n\n{template}"
-    )
+        with open(f"letter_templates/{choice(temps)}", mode="r") as temp_file:
+            read_data = temp_file.read()
+            read_data = read_data.replace("[NAME]", name)
+            print(read_data)
+            template += read_data
+
+        # SEND MAIL TO WISH BIRTHDAY
+        my_email = "pythonemailtesting76@gmail.com"
+        password = "9534857622"
+
+        with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
+            connection.starttls()
+            connection.login(user=my_email, password=password)
+            connection.sendmail(
+                from_addr=my_email,
+                to_addrs=email,
+                msg=f"Subject:Happy BirthDay!\n\n{template}"
+            )
 
