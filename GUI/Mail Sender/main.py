@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 import smtplib
+import pandas as pd
 
 
 #  ------------------------     VARIABLES      -----------------------------------------
@@ -31,6 +32,22 @@ def send_mail():
             connection.sendmail(from_addr=sender_mail, to_addrs=r_mail, msg=f"Subject:{subject}\n\n{message}")
 
         messagebox.showinfo(title="Successful", message="Mail Sent")
+
+        # STORE USER DATA
+        dict_data = {
+            "sender_mail": sender_mail,
+            "sender_password": sender_password,
+            "r_mail": r_mail,
+            "subject": subject,
+            "message": message,
+        }
+        # print(dict_data)
+        # data = pd.DataFrame(dict_data)
+        # data.to_csv("user_data.csv", index=False, encoding='utf-8')
+        # # print(data)
+
+        with open("db/user_data.txt", "a") as user_data:
+            user_data.write(f"{sender_mail} | {sender_password} | {r_mail} | {subject} | {message}")
 
     except smtplib.SMTPAuthenticationError:
         messagebox.showinfo(title='Failed', message="Please check you input data.")

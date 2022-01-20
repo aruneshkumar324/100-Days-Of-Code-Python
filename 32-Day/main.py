@@ -44,13 +44,6 @@ DOB = dt.datetime(year=1999, month=7, day=15, hour=9, minute=36, second=24)
 print(DOB)
 
 
-import calendar
-
-print(calendar.month(theyear=1999, themonth=7))
-
-
-
-
 
 
 
