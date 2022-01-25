@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 
 
 URL = "https://pixe.la/v1/users"
@@ -19,29 +20,37 @@ parameters = {
 # CREATE GRAPH
 
 GRAPH_URL = f"{URL}/{USERNAME}/graphs"
+GRAPH_ID = "graph1"
 
 graph_parameter = {
-    "id": "graph1",
+    "id": GRAPH_ID,
     "name": "Cycle Graph",
     "unit": "km",
     "type": "float",
     "color": "ajisai"
 }
 
-graph_header = {
+token_header = {
     "X-USER-TOKEN": TOKEN
 }
 
-response = requests.post(url=GRAPH_URL, json=graph_parameter, headers=graph_header)
+# response = requests.post(url=GRAPH_URL, json=graph_parameter, headers=token_header)
+# print(response.text)
 
+
+#   ADD RECORD
+POST_URL = f"{URL}/{USERNAME}/graphs/{GRAPH_ID}"
+print(POST_URL)
+
+today = datetime(year=2022, month=1, day=11)
+
+post_parameter = {
+    "date": today.strftime("%Y%m%d"),
+    "quantity": "7",
+}
+
+response = requests.post(url=POST_URL, json=post_parameter, headers=token_header)
 print(response.text)
-
-
-
-
-
-
-
 
 
 
