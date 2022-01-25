@@ -49,18 +49,21 @@ post_parameter = {
     "quantity": "7",
 }
 
-response = requests.post(url=POST_URL, json=post_parameter, headers=token_header)
+# response = requests.post(url=POST_URL, json=post_parameter, headers=token_header)
+# print(response.text)
+
+
+# # UPDATE GRAPH RECORD
+# UPDATE_URL = f"{URL}/{USERNAME}/graphs/{GRAPH_ID}/{today.strftime('%Y%m%d')}"
+# update_parameter = {
+#     "quantity": "2"
+# }
+# response = requests.put(url=UPDATE_URL, json=update_parameter, headers=token_header)
+# print(response.text)
+
+DELETE_URL = f"{URL}/{USERNAME}/graphs/{GRAPH_ID}/{today.strftime('%Y%m%d')}"
+
+response = requests.delete(url=DELETE_URL, headers=token_header)
+
 print(response.text)
-
-
-
-
-
-
-
-
-
-
-
-
 
