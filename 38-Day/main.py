@@ -61,17 +61,17 @@ for x in data:
         }
     }
 
-    add_sheet_response = requests.post(url=SHEET_URL, json=add_parameter, headers=sheet_header)
+    add_sheet_response = requests.post(url=SHEET_URL, json=add_parameter, headers=sheet_header, auth=("arunesh", "9534857622"))
     print(add_sheet_response.text)
 
 
 # FETCH SHEET DATA
-sheet_response = requests.get(url=SHEET_URL)
+sheet_response = requests.get(url=SHEET_URL, auth=("arunesh", "9534857622"))
 print(sheet_response.text)
 
 
 # DELETE SHEET ROW
-# delete_sheet_response = requests.delete(url=f"{SHEET_URL}/2")
+# delete_sheet_response = requests.delete(url=f"{SHEET_URL}/2", auth=("arunesh", "9534857622"))
 # print(delete_sheet_response.status_code)
 
 # Ran 5k and cycled for 20 minutes.
