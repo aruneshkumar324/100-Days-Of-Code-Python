@@ -18,8 +18,9 @@ songs = []
 for x in songs_title[6::2]:
     songs.append(x.getText().split('\n'))
 
-# for song in songs[::2]:
-#     print(song[1])
+list_songs = []
+for song in songs[::2]:
+    list_songs.append(song[1])
 
 
 # SPOTIFY
@@ -44,12 +45,32 @@ for idx, item in enumerate(results['items']):
     track = item['track']
     print(idx, track['artists'][0]['name'], " – ", track['name'])
 
+# 3 STEP
+user_id = sp.current_user()["id"]
+date = "2000-08-12"
+song_names = ["The list of song", "titles from your", "web scrape"]
+
+song_uris = []
+year = date.split("-")[0]
+for song in song_names:
+    result = sp.search(q=f"track:{song} year:{year}", type="track")
+    print(result)
+    try:
+        uri = result["tracks"]["items"][0]["uri"]
+        song_uris.append(uri)
+    except IndexError:
+        print(f"{song} doesn't exist in Spotify. Skipped.")
 
 
 
+# 4 STEP
 
 
+playlist = sp.user_playlist_create(user=user_id, name=f"{date} Billboard 100", public=False)
+print(playlist)
 
+#Adding songs found into the new playlist
+sp.playlist_add_items(playlist_id=playlist["id"], items=song_uris)
 
 
 
