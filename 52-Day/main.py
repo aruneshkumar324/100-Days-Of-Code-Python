@@ -69,8 +69,6 @@ class InstaFollower:
                 cancel_button.click()
 
 
-
-
 bot = InstaFollower(PATH)
 
 bot.login()
