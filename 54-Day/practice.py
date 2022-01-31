@@ -1,6 +1,19 @@
 
+def first(fun):
+    print('hello arunesh')
+    # def say():
+    #     print('hello arunesh')
+    # return say
+
+@first
+def final():
+    print('FINAL')
 
 
+final()
+
+def second():
+    print('second function')
 
 
 
