@@ -14,13 +14,10 @@
 
     <div class="content">
         <div class="card">
-            {% for post in posts %}
-                {% if post['id'] == post_id %}
                     <h2>{{ post['title'] }}</h2>
                     <p>{{ post['subtitle'] }}</p>
                     <p>{{ post['body'] }}</p>
-                {% endif %}
-            {% endfor %}
+
         </div>
 
     </div>
