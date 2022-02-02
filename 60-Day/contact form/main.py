@@ -1,9 +1,8 @@
 from flask import Flask, render_template, request
 import requests
-
+from componets import mail_send
 
 app = Flask(__name__)
-
 response = requests.get(url="https://api.npoint.io/9d474babfbdf3a487bf2").json()
 
 
@@ -34,32 +33,11 @@ def contact():
         phone = request.form['phone']
         message = request.form['message']
         print(name, email, phone, message)
+
+        mail_send(name, email, phone, message)
+
         return render_template('contact.html', is_sent=True)
     return render_template('contact.html', is_sent=False)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
