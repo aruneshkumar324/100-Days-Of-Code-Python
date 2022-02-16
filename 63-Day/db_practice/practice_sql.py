@@ -34,7 +34,7 @@ class Books(db.Model):
 # db.create_all()
 
 
-# new_book = Books(title='Harry Potter', author='J. K. Rowling', rating=9.3)
+# new_book = Books(title='First', author='J. K. Rowling', rating=9.3)
 # db.session.add(new_book)
 # db.session.commit()
 
@@ -44,7 +44,7 @@ print(all_books)
 
 
 book = Books.query.filter_by(title="Harry Potter").first()
-print(book)
+print(book.title)
 
 
 # book_update = Books.query.filter_by(title='Harry Potter').first()
@@ -57,9 +57,9 @@ print(book)
 # db.session.commit()
 
 
-delete_book = Books.query.get(1)
-db.session.delete(delete_book)
-db.session.commit()
+# delete_book = Books.query.get(1)
+# db.session.delete(delete_book)
+# db.session.commit()
 
 
 
