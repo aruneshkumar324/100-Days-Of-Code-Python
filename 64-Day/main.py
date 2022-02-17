@@ -32,6 +32,11 @@ class UpdateForm(FlaskForm):
     submit = SubmitField(label='Done')
 
 
+class AddMovie(FlaskForm):
+    title = StringField(label='Movie Title', validators=[DataRequired()])
+    submit = SubmitField(label='Add Movie')
+
+
 # db.create_all()
 
 # new_movie = Movie(
@@ -75,6 +80,17 @@ def delete():
     db.session.delete(movie)
     db.session.commit()
     return redirect(url_for('home'))
+
+
+@app.route('/add', methods=['GET', 'POST'])
+def add():
+    form = AddMovie()
+    if form.validate_on_submit():
+        movie_title = form.title.data
+        response = requests.get('https://api.themoviedb.org/3/search/movie', params={"api_key": '47fe25fb7ea1a65d9df7ef0cfab0ba4a', "query": movie_title})
+        data = response.json()["results"]
+        return render_template("select.html", options=data)
+    return render_template('add.html', form=form)
 
 
 if __name__ == '__main__':
