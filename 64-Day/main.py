@@ -58,13 +58,23 @@ def home():
 def edit():
     form = UpdateForm()
     movie_id = request.args.get('id')
-    if request.method == 'POST':
+    # if request.method == 'POST':
+    if form.validate_on_submit():
         movie_update = Movie.query.get(movie_id)
         movie_update.rating = request.form['rating']
         movie_update.review = request.form['review']
         db.session.commit()
         return redirect(url_for('home'))
     return render_template('edit.html', form=form)
+
+
+@app.route('/delete')
+def delete():
+    movie_id = request.args.get('id')
+    movie = Movie.query.get(movie_id)
+    db.session.delete(movie)
+    db.session.commit()
+    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
