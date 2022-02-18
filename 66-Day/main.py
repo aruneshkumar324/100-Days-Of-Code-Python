@@ -124,11 +124,58 @@ def search():
         })
 
 
-## HTTP POST - Create Record
+# HTTP POST - Create Record
+@app.route('/add', methods=['POST'])
+def add_new_cafe():
+    new_cafe = Cafe(
+        name=request.form.get("name"),
+        map_url=request.form.get("map_url"),
+        img_url=request.form.get("img_url"),
+        location=request.form.get("loc"),
+        has_sockets=bool(request.form.get("sockets")),
+        has_toilet=bool(request.form.get("toilet")),
+        has_wifi=bool(request.form.get("wifi")),
+        can_take_calls=bool(request.form.get("calls")),
+        seats=request.form.get("seats"),
+        coffee_price=request.form.get("coffee_price"),
+    )
 
-## HTTP PUT/PATCH - Update Record
+    db.session.add(new_cafe)
+    db.session.commit()
+    return jsonify(response={"success": "Successfully added the new cafe."})
 
-## HTTP DELETE - Delete Record
+
+# HTTP PUT/PATCH - Update Record
+@app.route('/update-price/<int:cafe_id>', methods=['PATCH'])
+def update_cafe(cafe_id):
+    cafe = Cafe.query.get(cafe_id)
+    new_coffee_price = request.args.get('new_price')
+
+    if cafe:
+        cafe.coffee_price = new_coffee_price
+        db.session.commit()
+        return jsonify(cafe={"Success": "Successfully added the new cafe."})
+    else:
+        return jsonify(error={"Not Found": "Sorry a cafe with that id was not found in the database."}), 404
+
+
+# HTTP DELETE - Delete Record
+@app.route('/report-closed/<int:cafe_id>', methods=['DELETE'])
+def delete_cafe(cafe_id):
+    get_cafe = Cafe.query.get(cafe_id)
+    api_value = request.args.get('api-key')
+
+    if api_value == "ASzx@8002756958":
+
+        if get_cafe:
+            db.session.delete(get_cafe)
+            db.session.commit()
+
+            return jsonify(response={"Success": "Successfully deleted the cafe."}), 200
+        else:
+            return jsonify(error={"Not Found": "Sorry a cafe with that id was not found in the database."}), 404
+    else:
+        return jsonify({"error": "Sorry, that's not allowed. Make sure you have the correct api_key."}), 401
 
 
 if __name__ == '__main__':
