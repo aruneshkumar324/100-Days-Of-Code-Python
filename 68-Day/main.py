@@ -30,11 +30,12 @@ def home():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        hash_password = generate_password_hash(request.form['password'], method='pbkdf2:sha256', salt_length=8)
 
         new_user = User(
             name=request.form['name'],
             email=request.form['email'],
-            password=request.form['password'],
+            password=hash_password,
         )
 
         db.session.add(new_user)
@@ -60,11 +61,6 @@ def logout():
     pass
 
 
-# @app.route('/download')
-# def download():
-#     return send_from_directory(app.static_folder, filename='files/cheat_sheet.pdf')
-
-
 @app.route('/download')
 def download():
     filename = 'cheat_sheet.pdf'
@@ -73,6 +69,15 @@ def download():
         path=filename,
         as_attachment=False
     )
+
+
+@app.route('/delete', methods=['GET', 'POST'])
+def delete_users():
+    users = User.query.all()
+    for user in users:
+        user_id = user.id
+        db.session.delete(user)
+        db.session.commit()
 
 
 if __name__ == "__main__":
