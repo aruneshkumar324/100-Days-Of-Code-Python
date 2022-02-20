@@ -49,7 +49,7 @@ class User(UserMixin, db.Model):
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    return render_template("index.html", logged_in=current_user.is_authenticated, user=current_user)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -63,12 +63,16 @@ def register():
             password=hash_password,
         )
 
+        if User.query.filter_by(email=new_user.email).first():
+            flash("You've already signed up with that email, log in instead!")
+            return redirect(url_for('login'))
+
         db.session.add(new_user)
         db.session.commit()
 
         return render_template('secrets.html', user=new_user.name)
 
-    return render_template("register.html")
+    return render_template("register.html", logged_in=current_user.is_authenticated)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -82,14 +86,17 @@ def login():
         if user and check_password_hash(user.password, password):
             login_user(user)
             return redirect(url_for('secrets'))
+        else:
+            flash('Email or Password incorrect, please try again.')
+            return redirect(url_for('login'))
 
-    return render_template("login.html")
+    return render_template("login.html", logged_in=current_user.is_authenticated)
 
 
 @app.route('/secrets')
 @login_required
 def secrets():
-    return render_template("secrets.html", user=current_user.name)
+    return render_template("secrets.html", user=current_user.name, logged_in=True)
 
 
 @app.route('/logout')
