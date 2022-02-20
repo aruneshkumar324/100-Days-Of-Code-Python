@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
-from forms import CreatePostForm, RegisterForm
+from forms import CreatePostForm, RegisterForm, LoginForm
 from flask_gravatar import Gravatar
 
 
@@ -20,6 +20,15 @@ Bootstrap(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
 
 
 # CONFIGURE TABLES
@@ -47,13 +56,17 @@ class User(UserMixin, db.Model):
 @app.route('/')
 def get_all_posts():
     posts = BlogPost.query.all()
-    return render_template("index.html", all_posts=posts)
+    return render_template("index.html", all_posts=posts, current_user=current_user)
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
+
+        if User.query.filter_by(email=form.email.data).first():
+            flash("You've already signup with that email, login now")
+            return redirect(url_for('login'))
 
         hash_password = generate_password_hash(password=form.password.data, method='pbkdf2:sha256', salt_length=8)
 
@@ -66,38 +79,58 @@ def register():
         db.session.add(new_user)
         db.session.commit()
 
+        login_user(new_user)
+
         return redirect(url_for('get_all_posts'))
 
-    return render_template("register.html", form=form)
+    return render_template("register.html", form=form, current_user=current_user)
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template("login.html")
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+
+        if user:
+            if not check_password_hash(pwhash=user.password, password=form.password.data):
+                flash('Password incorrect, Please try again')
+                return redirect(url_for('login'))
+            else:
+                login_user(user)
+                return redirect(url_for('get_all_posts'))
+        else:
+            flash("That Email doesn't exist, Please try again")
+            return redirect(url_for('login'))
+
+    return render_template("login.html", form=form, current_user=current_user)
 
 
 @app.route('/logout')
 def logout():
+    logout_user()
     return redirect(url_for('get_all_posts'))
 
 
 @app.route("/post/<int:post_id>")
 def show_post(post_id):
     requested_post = BlogPost.query.get(post_id)
-    return render_template("post.html", post=requested_post)
+    return render_template("post.html", post=requested_post, current_user=current_user)
 
 
 @app.route("/about")
 def about():
-    return render_template("about.html")
+    return render_template("about.html", current_user=current_user)
 
 
 @app.route("/contact")
 def contact():
-    return render_template("contact.html")
+    return render_template("contact.html", current_user=current_user)
 
 
 @app.route("/new-post")
+@login_required
 def add_new_post():
     form = CreatePostForm()
     if form.validate_on_submit():
@@ -112,10 +145,11 @@ def add_new_post():
         db.session.add(new_post)
         db.session.commit()
         return redirect(url_for("get_all_posts"))
-    return render_template("make-post.html", form=form)
+    return render_template("make-post.html", form=form, current_user=current_user)
 
 
 @app.route("/edit-post/<int:post_id>")
+@login_required
 def edit_post(post_id):
     post = BlogPost.query.get(post_id)
     edit_form = CreatePostForm(
@@ -134,7 +168,7 @@ def edit_post(post_id):
         db.session.commit()
         return redirect(url_for("show_post", post_id=post.id))
 
-    return render_template("make-post.html", form=edit_form)
+    return render_template("make-post.html", form=edit_form, current_user=current_user)
 
 
 @app.route("/delete/<int:post_id>")
