@@ -1,3 +1,5 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
 {% include "header.html" %}
 
   <!-- Page Header -->
@@ -34,8 +36,12 @@
 
 
 
+            {{ ckeditor.load() }}
+            {{ ckeditor.config(name='comment_text') }}
+            {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
 <!--           Comments Area -->
           <div class="col-lg-8 col-md-10 mx-auto comment">
+
               <ul class="commentList">
                 <li>
                     <div class="commenterImage">

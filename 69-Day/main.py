@@ -8,7 +8,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
-from forms import CreatePostForm, RegisterForm, LoginForm
+from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 from flask_gravatar import Gravatar
 from functools import wraps
 
@@ -133,7 +133,8 @@ def logout():
 @app.route("/post/<int:post_id>")
 def show_post(post_id):
     requested_post = BlogPost.query.get(post_id)
-    return render_template("post.html", post=requested_post, current_user=current_user)
+    form = CommentForm()
+    return render_template("post.html", post=requested_post, current_user=current_user, form=form)
 
 
 @app.route("/about")
@@ -146,7 +147,7 @@ def contact():
     return render_template("contact.html", current_user=current_user)
 
 
-@app.route("/new-post")
+@app.route("/new-post", methods=['GET', 'POST'])
 @login_required
 @admin_only
 def add_new_post():
@@ -166,7 +167,7 @@ def add_new_post():
     return render_template("make-post.html", form=form, current_user=current_user)
 
 
-@app.route("/edit-post/<int:post_id>")
+@app.route("/edit-post/<int:post_id>", methods=['GET', 'POST'])
 @login_required
 @admin_only
 def edit_post(post_id):
